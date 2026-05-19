@@ -9,11 +9,22 @@ CREATE TABLE IF NOT EXISTS posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     school TEXT NOT NULL,
     school_type TEXT,
+    department TEXT,
     title TEXT NOT NULL,
     url TEXT NOT NULL UNIQUE,
     date TEXT,
     category TEXT,
     year TEXT,
+    province TEXT,
+    subject TEXT,
+    major TEXT,
+    level TEXT,
+    signup_start TEXT,
+    signup_end TEXT,
+    signup_end_text TEXT,
+    event_time_text TEXT,
+    source TEXT DEFAULT 'school',
+    external_id TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 """
@@ -39,8 +50,19 @@ def init_db():
         columns = {row[1] for row in conn.execute("PRAGMA table_info(posts)").fetchall()}
         migrations = {
             "school_type": "ALTER TABLE posts ADD COLUMN school_type TEXT",
+            "department": "ALTER TABLE posts ADD COLUMN department TEXT",
             "category": "ALTER TABLE posts ADD COLUMN category TEXT",
             "year": "ALTER TABLE posts ADD COLUMN year TEXT",
+            "province": "ALTER TABLE posts ADD COLUMN province TEXT",
+            "subject": "ALTER TABLE posts ADD COLUMN subject TEXT",
+            "major": "ALTER TABLE posts ADD COLUMN major TEXT",
+            "level": "ALTER TABLE posts ADD COLUMN level TEXT",
+            "signup_start": "ALTER TABLE posts ADD COLUMN signup_start TEXT",
+            "signup_end": "ALTER TABLE posts ADD COLUMN signup_end TEXT",
+            "signup_end_text": "ALTER TABLE posts ADD COLUMN signup_end_text TEXT",
+            "event_time_text": "ALTER TABLE posts ADD COLUMN event_time_text TEXT",
+            "source": "ALTER TABLE posts ADD COLUMN source TEXT DEFAULT 'school'",
+            "external_id": "ALTER TABLE posts ADD COLUMN external_id TEXT",
         }
         for column, sql in migrations.items():
             if column not in columns:
@@ -68,26 +90,114 @@ def init_db():
         conn.commit()
 
 
-def save_post(school, title, url, date, school_type="", category="", year=""):
+def save_post(
+    school,
+    title,
+    url,
+    date="",
+    school_type="",
+    category="",
+    year="",
+    department="",
+    province="",
+    subject="",
+    major="",
+    level="",
+    signup_start="",
+    signup_end="",
+    signup_end_text="",
+    event_time_text="",
+    source="school",
+    external_id="",
+):
+    init_db()
     try:
         with closing(get_conn()) as conn:
             conn.execute(
                 """
-                INSERT INTO posts (school, school_type, title, url, date, category, year)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO posts (
+                    school, school_type, department, title, url, date, category, year,
+                    province, subject, major, level, signup_start, signup_end,
+                    signup_end_text, event_time_text, source, external_id
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (school, school_type, title, url, date, category, year),
+                (
+                    school,
+                    school_type,
+                    department,
+                    title,
+                    url,
+                    date,
+                    category,
+                    year,
+                    province,
+                    subject,
+                    major,
+                    level,
+                    signup_start,
+                    signup_end,
+                    signup_end_text,
+                    event_time_text,
+                    source,
+                    external_id,
+                ),
             )
             conn.commit()
         return True
     except sqlite3.IntegrityError:
+        with closing(get_conn()) as conn:
+            conn.execute(
+                """
+                UPDATE posts
+                SET school = ?, school_type = COALESCE(NULLIF(?, ''), school_type),
+                    department = COALESCE(NULLIF(?, ''), department),
+                    title = ?, date = COALESCE(NULLIF(?, ''), date),
+                    category = COALESCE(NULLIF(?, ''), category),
+                    year = COALESCE(NULLIF(?, ''), year),
+                    province = COALESCE(NULLIF(?, ''), province),
+                    subject = COALESCE(NULLIF(?, ''), subject),
+                    major = COALESCE(NULLIF(?, ''), major),
+                    level = COALESCE(NULLIF(?, ''), level),
+                    signup_start = COALESCE(NULLIF(?, ''), signup_start),
+                    signup_end = COALESCE(NULLIF(?, ''), signup_end),
+                    signup_end_text = COALESCE(NULLIF(?, ''), signup_end_text),
+                    event_time_text = COALESCE(NULLIF(?, ''), event_time_text),
+                    source = COALESCE(NULLIF(?, ''), source),
+                    external_id = COALESCE(NULLIF(?, ''), external_id)
+                WHERE url = ?
+                """,
+                (
+                    school,
+                    school_type,
+                    department,
+                    title,
+                    date,
+                    category,
+                    year,
+                    province,
+                    subject,
+                    major,
+                    level,
+                    signup_start,
+                    signup_end,
+                    signup_end_text,
+                    event_time_text,
+                    source,
+                    external_id,
+                    url,
+                ),
+            )
+            conn.commit()
         return False
 
 
 def list_posts(keyword="", school="", school_type="", category="", year="", limit=200):
     init_db()
     sql = """
-    SELECT id, school, school_type, title, url, date, category, year, created_at
+    SELECT id, school, school_type, department, title, url, date, category, year,
+           province, subject, major, level, signup_start, signup_end,
+           signup_end_text, event_time_text, source, external_id, created_at
     FROM posts
     """
     clauses = []

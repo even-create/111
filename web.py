@@ -6,6 +6,7 @@ from storage.db import get_notify_settings, get_stats, get_years, list_posts, se
 
 
 app = Flask(__name__)
+YEAR_CHOICES = [str(year) for year in range(2027, 2020, -1)]
 
 
 @app.route("/")
@@ -24,13 +25,14 @@ def index():
     )
     stats = get_stats()
     stats["monitored"] = len(SCHOOLS)
+    years = sorted(set(YEAR_CHOICES + get_years()), reverse=True)
 
     return render_template(
         "index.html",
         posts=posts,
         stats=stats,
         schools=SCHOOLS,
-        years=get_years(),
+        years=years,
         notify=get_notify_settings(),
         keyword=keyword,
         selected_school=school,
