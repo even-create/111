@@ -1,65 +1,49 @@
 SCHOOLS = [
-    {
-        "name": "中国政法大学",
-        "type": "五院四系",
-        "urls": [
-            "https://yjsy.cupl.edu.cn/zsgz/zsxx.htm",
-        ],
-    },
-    {
-        "name": "北京大学",
-        "type": "985",
-        "urls": [
-            "https://www.law.pku.edu.cn/ggtz.htm",
-        ],
-    },
-    {
-        "name": "中国人民大学",
-        "type": "985 / 五院四系",
-        "urls": [
-            "https://www.law.ruc.edu.cn/xwzx/tzgg.htm",
-        ],
-    },
-    {
-        "name": "清华大学",
-        "type": "985",
-        "urls": [
-            "https://www.law.tsinghua.edu.cn/info/1052/1789.htm",
-        ],
-    },
-    {
-        "name": "武汉大学",
-        "type": "985 / 五院四系",
-        "urls": [
-            "https://law.whu.edu.cn/xwzx/tzgg.htm",
-        ],
-    },
-    {
-        "name": "吉林大学",
-        "type": "985 / 五院四系",
-        "urls": [
-            "https://law.jlu.edu.cn/tzgg.htm",
-        ],
-    },
-    {
-        "name": "华东政法大学",
-        "type": "五院四系",
-        "urls": [
-            "https://yjsy.ecupl.edu.cn/7795/list.htm",
-        ],
-    },
-    {
-        "name": "西南政法大学",
-        "type": "五院四系",
-        "urls": [
-            "https://yjsy.swupl.edu.cn/zsgl/qrzssszlxx/index.htm",
-        ],
-    },
-    {
-        "name": "中南财经政法大学",
-        "type": "五院四系",
-        "urls": [
-            "https://law.zuel.edu.cn/tzgg/list.htm",
-        ],
-    },
+    # 五院四系
+    {"name": "中国政法大学", "type": "五院四系", "urls": ["https://yjsy.cupl.edu.cn/zsgz/zsxx.htm"]},
+    {"name": "华东政法大学", "type": "五院四系", "urls": ["https://yjsy.ecupl.edu.cn/7795/list.htm"]},
+    {"name": "西南政法大学", "type": "五院四系", "urls": ["https://yjsy.swupl.edu.cn/zsgl/qrzssszlxx/index.htm"]},
+    {"name": "中南财经政法大学", "type": "五院四系", "urls": ["https://law.zuel.edu.cn/tzgg/list.htm"]},
+    {"name": "西北政法大学", "type": "五院四系", "urls": ["https://yjsy.nwupl.edu.cn/tzgg.htm"]},
+    {"name": "北京大学", "type": "985 / 五院四系", "urls": ["https://www.law.pku.edu.cn/ggtz.htm"]},
+    {"name": "中国人民大学", "type": "985 / 五院四系", "urls": ["https://www.law.ruc.edu.cn/xwzx/tzgg.htm"]},
+    {"name": "吉林大学", "type": "985 / 五院四系", "urls": ["https://law.jlu.edu.cn/tzgg.htm"]},
+    {"name": "武汉大学", "type": "985 / 五院四系", "urls": ["https://law.whu.edu.cn/xwzx/tzgg.htm"]},
+
+    # 985 高校
+    {"name": "清华大学", "type": "985", "urls": ["https://www.law.tsinghua.edu.cn/info/1052/1789.htm"]},
+    {"name": "北京航空航天大学", "type": "985", "urls": ["https://fxy.buaa.edu.cn/tzgg.htm"]},
+    {"name": "北京理工大学", "type": "985", "urls": ["https://law.bit.edu.cn/tzgg/index.htm"]},
+    {"name": "北京师范大学", "type": "985", "urls": ["https://law.bnu.edu.cn/tzgg/index.htm"]},
+    {"name": "中国农业大学", "type": "985", "urls": ["https://clst.cau.edu.cn/col/col44661/index.html"]},
+    {"name": "中央民族大学", "type": "985", "urls": ["https://law.muc.edu.cn/tzgg.htm"]},
+    {"name": "南开大学", "type": "985", "urls": ["https://law.nankai.edu.cn/tzgg/list.htm"]},
+    {"name": "天津大学", "type": "985", "urls": ["https://law.tju.edu.cn/tzgg.htm"]},
+    {"name": "大连理工大学", "type": "985", "urls": ["https://rw.dlut.edu.cn/tzgg.htm"]},
+    {"name": "东北大学", "type": "985", "urls": ["https://wenfa.neu.edu.cn/tzgg.htm"]},
+    {"name": "哈尔滨工业大学", "type": "985", "urls": ["https://law.hit.edu.cn/tzgg/list.htm"]},
+    {"name": "复旦大学", "type": "985", "urls": ["https://law.fudan.edu.cn/14576/list.htm"]},
+    {"name": "同济大学", "type": "985", "urls": ["https://law.tongji.edu.cn/tzgg/list.htm"]},
+    {"name": "上海交通大学", "type": "985", "urls": ["https://law.sjtu.edu.cn/tongzhigonggao.html"]},
+    {"name": "华东师范大学", "type": "985", "urls": ["https://law.ecnu.edu.cn/tzgg/list.htm"]},
+    {"name": "南京大学", "type": "985", "urls": ["https://law.nju.edu.cn/tzgg/list.htm"]},
+    {"name": "东南大学", "type": "985", "urls": ["https://law.seu.edu.cn/tzgg/list.htm"]},
+    {"name": "浙江大学", "type": "985", "urls": ["https://www.law.zju.edu.cn/chinese/notice/list.htm"]},
+    {"name": "中国科学技术大学", "type": "985", "urls": ["https://pas.ustc.edu.cn/tzgg/list.htm"]},
+    {"name": "厦门大学", "type": "985", "urls": ["https://law.xmu.edu.cn/tzgg/list.htm"]},
+    {"name": "山东大学", "type": "985", "urls": ["https://www.law.sdu.edu.cn/tzgg.htm"]},
+    {"name": "中国海洋大学", "type": "985", "urls": ["https://law.ouc.edu.cn/tzgg/list.htm"]},
+    {"name": "华中科技大学", "type": "985", "urls": ["https://law.hust.edu.cn/tzgg.htm"]},
+    {"name": "湖南大学", "type": "985", "urls": ["https://law.hnu.edu.cn/tzgg.htm"]},
+    {"name": "中南大学", "type": "985", "urls": ["https://law.csu.edu.cn/tzgg.htm"]},
+    {"name": "中山大学", "type": "985", "urls": ["https://law.sysu.edu.cn/notice"]},
+    {"name": "华南理工大学", "type": "985", "urls": ["https://law.scut.edu.cn/tzgg/list.htm"]},
+    {"name": "四川大学", "type": "985", "urls": ["https://law.scu.edu.cn/tzgg.htm"]},
+    {"name": "重庆大学", "type": "985", "urls": ["https://law.cqu.edu.cn/tzgg.htm"]},
+    {"name": "电子科技大学", "type": "985", "urls": ["https://www.rw.uestc.edu.cn/tzgg.htm"]},
+    {"name": "西安交通大学", "type": "985", "urls": ["https://fxy.xjtu.edu.cn/tzgg.htm"]},
+    {"name": "西北工业大学", "type": "985", "urls": ["https://rwjj.nwpu.edu.cn/tzgg.htm"]},
+    {"name": "西北农林科技大学", "type": "985", "urls": ["https://zhxy.nwafu.edu.cn/tzgg/index.htm"]},
+    {"name": "兰州大学", "type": "985", "urls": ["https://law.lzu.edu.cn/tzgg.htm"]},
+    {"name": "国防科技大学", "type": "985", "urls": ["https://www.nudt.edu.cn/tzgg/index.htm"]},
 ]

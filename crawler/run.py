@@ -1,5 +1,5 @@
 from crawler.base import fetch, normalize_link, parse_html
-from crawler.parser import is_valid, parse_date
+from crawler.parser import detect_category, is_valid, parse_date, parse_year
 from crawler.schools import SCHOOLS
 from notify.serverchan import push
 from storage.db import init_db, save_post
@@ -23,6 +23,7 @@ def run():
 
     for school in SCHOOLS:
         name = school["name"]
+        school_type = school["type"]
 
         for url in school["urls"]:
             try:
@@ -36,7 +37,9 @@ def run():
                 if not is_valid(title):
                     continue
 
-                saved = save_post(name, title, link, date)
+                category = detect_category(title)
+                year = parse_year(title, date)
+                saved = save_post(name, title, link, date, school_type, category, year)
                 if not saved:
                     continue
 
@@ -44,7 +47,7 @@ def run():
                 print(f"[NEW] {name} {title} {link}")
                 push(
                     f"新保研通知：{name}",
-                    f"{title}\n\n{link}",
+                    f"{category}｜{title}\n\n{link}",
                 )
 
     print(f"crawler finished, new posts: {new_count}")

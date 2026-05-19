@@ -24,8 +24,20 @@
         <strong>{{ stats.total }}</strong>
       </div>
       <div class="stat">
+        <span>监控学校</span>
+        <strong>{{ stats.monitored }}</strong>
+      </div>
+      <div class="stat">
         <span>已入库学校</span>
         <strong>{{ stats.schools }}</strong>
+      </div>
+      <div class="stat">
+        <span>夏令营</span>
+        <strong>{{ stats.summer }}</strong>
+      </div>
+      <div class="stat">
+        <span>预推免</span>
+        <strong>{{ stats.pre_recommend }}</strong>
       </div>
       <div class="stat">
         <span>最近入库</span>
@@ -37,7 +49,7 @@
       <form method="get" class="filters">
         <label>
           <span>关键词</span>
-          <input name="q" value="{{ keyword }}" placeholder="夏令营 / 推免 / 学校">
+          <input name="q" value="{{ keyword }}" placeholder="夏令营 / 预推免 / 学校">
         </label>
         <label>
           <span>学校</span>
@@ -50,8 +62,54 @@
             {% endfor %}
           </select>
         </label>
+        <label>
+          <span>学校类型</span>
+          <select name="school_type">
+            <option value="">全部类型</option>
+            <option value="985" {% if selected_school_type == "985" %}selected{% endif %}>985</option>
+            <option value="五院四系" {% if selected_school_type == "五院四系" %}selected{% endif %}>五院四系</option>
+          </select>
+        </label>
+        <label>
+          <span>通知类型</span>
+          <select name="category">
+            <option value="">全部通知</option>
+            <option value="夏令营" {% if selected_category == "夏令营" %}selected{% endif %}>夏令营</option>
+            <option value="预推免" {% if selected_category == "预推免" %}selected{% endif %}>预推免</option>
+            <option value="推免" {% if selected_category == "推免" %}selected{% endif %}>推免</option>
+            <option value="招生" {% if selected_category == "招生" %}selected{% endif %}>招生</option>
+          </select>
+        </label>
+        <label>
+          <span>年份</span>
+          <select name="year">
+            <option value="">全部年份</option>
+            {% for item in years %}
+              <option value="{{ item }}" {% if selected_year == item %}selected{% endif %}>{{ item }}</option>
+            {% endfor %}
+          </select>
+        </label>
         <button type="submit">查询</button>
         <a class="ghost" href="{{ url_for('index') }}">重置</a>
+      </form>
+    </section>
+
+    <section class="settings" aria-label="微信推送设置">
+      <div>
+        <h2>微信推送</h2>
+        <p>无需填写微信号。请在 Server酱绑定微信后，把 SendKey 填到这里。</p>
+      </div>
+      <form method="post" action="{{ url_for('save_notify_settings') }}" class="notify-form">
+        <label class="switch-row">
+          <input type="checkbox" name="notify_enabled" {% if notify.enabled %}checked{% endif %}>
+          <span>启用新通知推送</span>
+        </label>
+        <label>
+          <span>Server酱 SendKey</span>
+          <input name="serverchan_key" value="{{ notify.serverchan_key }}" placeholder="SCTxxxxxxxxxxxxxxxx">
+        </label>
+        <a class="ghost" href="https://sct.ftqq.com/" target="_blank" rel="noreferrer">绑定微信</a>
+        <button type="submit">保存设置</button>
       </form>
     </section>
 
@@ -60,7 +118,10 @@
         <thead>
           <tr>
             <th>学校</th>
+            <th>类型</th>
             <th>标题</th>
+            <th>通知类型</th>
+            <th>年份</th>
             <th>日期</th>
             <th>入库时间</th>
             <th>链接</th>
@@ -70,14 +131,17 @@
           {% for post in posts %}
             <tr>
               <td class="school">{{ post.school }}</td>
+              <td>{{ post.school_type or "-" }}</td>
               <td class="title">{{ post.title }}</td>
+              <td>{{ post.category or "-" }}</td>
+              <td>{{ post.year or "-" }}</td>
               <td>{{ post.date or "-" }}</td>
               <td>{{ post.created_at }}</td>
               <td><a class="open" href="{{ post.url }}" target="_blank" rel="noreferrer">打开</a></td>
             </tr>
           {% else %}
             <tr>
-              <td class="empty" colspan="5">暂无匹配通知</td>
+              <td class="empty" colspan="8">暂无匹配通知</td>
             </tr>
           {% endfor %}
         </tbody>
